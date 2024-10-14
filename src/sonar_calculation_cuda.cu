@@ -478,9 +478,9 @@ namespace NpsGazeboSonar
       SAFE_CALL(cudaMemcpy(d_P_Ray_imag, P_Ray_imag, P_Ray_Bytes, cudaMemcpyHostToDevice),
                 "CUDA Memcpy Failed");
 
-      column_sums_reduce<<<dimGrid_Ray, dimBlock>>>(d_P_Ray_real, d_P_Ray_F_real,
+      column_sums_reduce<float><<<dimGrid_Ray, dimBlock>>>(d_P_Ray_real, d_P_Ray_F_real,
                                                     nFreq, (int)(nRays / raySkips));
-      column_sums_reduce<<<dimGrid_Ray, dimBlock>>>(d_P_Ray_imag, d_P_Ray_F_imag,
+      column_sums_reduce<float><<<dimGrid_Ray, dimBlock>>>(d_P_Ray_imag, d_P_Ray_F_imag,
                                                     nFreq, (int)(nRays / raySkips));
 
       SAFE_CALL(cudaMemcpy(P_Ray_F_real, d_P_Ray_F_real, P_Ray_F_Bytes,

@@ -37,7 +37,7 @@
 
 #include <opencv2/core/core.hpp>
 #include <boost/thread/thread.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 
 #include <functional>
 #include <nps_uw_multibeam_sonar/gazebo_multibeam_sonar_ray_based.hh>
@@ -54,6 +54,8 @@
 #include <string>
 #include <vector>
 #include <limits>
+
+using namespace boost::placeholders;
 
 namespace gazebo
 {

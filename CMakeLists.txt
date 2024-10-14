@@ -10,14 +10,22 @@ enable_language(CUDA)
 include(CheckLanguage)
 check_language(CUDA)
 
-if(NOT DEFINED CMAKE_CUDA_STANDARD)
-  set(CMAKE_CUDA_STANDARD 14)
-  set(CMAKE_CUDA_STANDARD_REQUIRED TRUE)
-  set(CMAKE_CXX_STANDARD 17)
-  set(CMAKE_CXX_STANDARD_REQUIRED ON)
-else()
-  add_compile_options(-std=c++17)
-endif()
+# if(NOT DEFINED CMAKE_CUDA_STANDARD)
+#   set(CMAKE_CUDA_STANDARD 14)
+#   set(CMAKE_CUDA_STANDARD_REQUIRED TRUE)
+#   set(CMAKE_CXX_STANDARD 17)
+#   set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# else()
+#   add_compile_options(-std=c++17)
+# endif()
+
+# set(CMAKE_CUDA_STANDARD 14)
+# set(CMAKE_CUDA_STANDARD_REQUIRED TRUE)
+# set(CMAKE_CXX_STANDARD 17)
+# set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CUDA_STANDARD 17)
+set(CMAKE_CUDA_STANDARD_REQUIRED ON)
+add_compile_options(-std=c++17)
 
 find_package(ament_cmake REQUIRED)
 find_package(ament_index_cpp REQUIRED)
@@ -32,11 +40,13 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(OpenCV REQUIRED)
+find_package(pcl_conversions REQUIRED)
+find_package(image_transport REQUIRED)
 
-find_package(PCL REQUIRED)
-include_directories(${PCL_INCLUDE_DIRS})
-link_directories(${PCL_LIBRARY_DIRS})
-add_definitions(${PCL_DEFINITIONS})
+# find_package(PCL REQUIRED)
+# include_directories(${PCL_INCLUDE_DIRS})
+# link_directories(${PCL_LIBRARY_DIRS})
+# add_definitions(${PCL_DEFINITIONS})
 
 find_package(CUDA REQUIRED)
 include_directories(${CUDA_INCLUDE_DIRS})
@@ -90,7 +100,9 @@ ament_target_dependencies(nps_multibeam_sonar_ros_plugin
   std_msgs
   sensor_msgs
   OpenCV
-  PCL
+  pcl_conversions
+  image_transport
+  # PCL
   CUDA
 )
 list(APPEND SENSOR_ROS_PLUGINS_LIST nps_multibeam_sonar_ros_plugin)
@@ -115,7 +127,8 @@ set_target_properties(nps_multibeam_sonar_ray_ros_plugin
 set_property(TARGET nps_multibeam_sonar_ray_ros_plugin PROPERTY CUDA_ARCHITECTURES 50 52 72)
 target_link_libraries(nps_multibeam_sonar_ray_ros_plugin
                       ${OGRE_LIBRARIES} ${ament_LIBRARIES}
-                      ${CUDA_LIBRARIES} ${PCL_LIBRARIES}
+                      ${CUDA_LIBRARIES}
+                      # ${PCL_LIBRARIES}
                       ${CUDA_CUFFT_LIBRARIES})
 ament_target_dependencies(nps_multibeam_sonar_ray_ros_plugin
   tf2
@@ -128,7 +141,9 @@ ament_target_dependencies(nps_multibeam_sonar_ray_ros_plugin
   std_msgs
   sensor_msgs
   OpenCV
-  PCL
+  pcl_conversions
+  image_transport
+  # PCL
   CUDA
 )
 list(APPEND SENSOR_ROS_PLUGINS_LIST nps_multibeam_sonar_ray_ros_plugin)

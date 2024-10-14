@@ -27,7 +27,7 @@
 
 #include <opencv2/core/core.hpp>
 #include <boost/thread/thread.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 
 #include <nps_uw_multibeam_sonar/gazebo_multibeam_sonar_raster_based.hh>
 #include <gazebo/sensors/Sensor.hh>
@@ -43,6 +43,8 @@
 
 #include <iostream>
 #include <chrono>
+
+using namespace boost::placeholders;
 
 namespace gazebo
 {
